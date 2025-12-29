@@ -1,0 +1,11 @@
+# Mac system files
+.DS_Store
+
+# Python environments
+venv/
+env/
+__pycache__/
+
+# User Data (You might not want to upload raw text files if they are huge)
+# Uncomment the next line if you want to keep input files private
+input_passages/
