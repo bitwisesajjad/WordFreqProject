@@ -34,7 +34,7 @@ IGNORE_LIST = {
 "common","usual","normal","strange","weird","strong","weak","heavy","light","hot","cold","warm","cool","dry",
 "wet","clean","dirty","full","empty","open","closed","happy","sad","angry","tired","hungry","beautiful",
 "ugly","pretty","funny","serious","quiet","loud","fast","slow","ready","free","possible","impossible",
-"important","main","whole","smallest","largest",
+"important","main","whole","smallest","largest",,"close","as","great","wide","aware","forth",
 "water","air","fire","earth","tree","plant","leaf","grass","flower","animal","dog","cat","bird","fish",
 "house","home","room","door","window","table","chair","bed","floor","ceiling","wall","school","class",
 "teacher","student","book","page","paper","pen","pencil","bag","car","bus","train","bike","road",
@@ -43,14 +43,15 @@ IGNORE_LIST = {
 "person","man","woman","boy","girl","baby","body","head","face","hand","arm","leg","foot","eye","ear","mouth",
 "nose","time","day","night","morning","evening","week","month","year","time","moment","place","thing","area",
 "side","part","name","number","group","kind","example","problem","answer","story","game","music","sound","color",
-"light","dark","rain","snow","wind","weather",
-    "form","ground","space","sand","meter","rock","soil","line","height","level","result","be",
-    "action","life","factor","ice","land","sea","river","mountain","society","human","world",
-    "forest","jungle","desert","season","winter","fall","summer","spring","ward","type","grow",
-    "flow","remain","exist","increase","decrease","rise","raise","fill","hope","change","wear",
-    "set","view","most","upper","also","much","more","total","solid","thus","less","enough",
-    "necessary","however","many","thin","fat","thick","certain","natural","20th","30th","social",
-    "deep","shallow","far","near","close","as","great","wide","aware","forth"
+"light","dark","rain","snow","wind","weather","general","recent","soft","several","cultural","physical","similar",
+"20th","past","final","possible","no","yes","at","moreover","therefore","as","great","chinese"
+"form","ground","space","sand","meter","rock","soil","line","height","level","result","be",
+"action","life","factor","ice","land","sea","river","mountain","society","human","world",
+"forest","jungle","desert","season","winter","fall","summer","spring","ward","type","grow",
+"flow","remain","exist","increase","decrease","rise","raise","fill","hope","change","wear",
+"set","view","most","upper","also","much","more","total","solid","thus","less","enough",
+"necessary","however","many","thin","fat","thick","certain","natural","20th","30th","social",
+"deep","shallow","far","near"
                }
 def load_database ():
     if not os.path.exists (DB_FILE):
