@@ -6,7 +6,8 @@ venv/
 env/
 __pycache__/
 
-# User Data (You might not want to upload raw text files if they are huge)
-# Uncomment the next line if you want to keep input files private
+# no user data
 input_passages/
 Input_texts/
+database/*
+!database/.gitkeep
