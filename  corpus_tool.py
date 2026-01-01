@@ -7,7 +7,7 @@ from nltk.metrics import BigramAssocMeasures, TrigramAssocMeasures
 from nltk.corpus import stopwords
 import string
 
-#--- CONFIGURATION ---
+#Configuring the folders
 INPUT_FOLDER = "Input_texts"
 DB_FOLDER = "database"
 DB_FILE = os.path.join(DB_FOLDER, "word_counts.json")
@@ -15,13 +15,15 @@ LOG_FILE = os.path.join(DB_FOLDER, "processed_log.json")
 PHRASE_FILE = os.path.join(DB_FOLDER, "common_phrases.txt")
 
 #Ensure NLTK data is ready
+print("Downloading ntlk (stopwords and punkt)...")
 nltk.download('stopwords', quiet=True)
 nltk.download('punkt', quiet=True)
 
 print("Loading NLP Brain (spaCy)...")
 nlp = spacy.load("en_core_web_sm", disable=["ner", "parser"])
 
-#IGNORE LIST (Single List)
+#IGNORE LIST / This script ios supposed to find words that are above level 1 vocabulary to create a 
+# a list of more difficult words for ESL users who are taking English standardized tests.
 ignored_words = {
 "very","really","quite","too","so","just","only","even","still","almost","nearly","already","yet","again",
 "always","often","usually","sometimes","rarely","never","now","then","soon","later","early","late","here",
@@ -39,7 +41,7 @@ ignored_words = {
 "common","usual","normal","strange","weird","strong","weak","heavy","light","hot","cold","warm","cool","dry",
 "wet","clean","dirty","full","empty","open","closed","happy","sad","angry","tired","hungry","beautiful",
 "ugly","pretty","funny","serious","quiet","loud","fast","slow","ready","free","possible","impossible",
-"important","main","whole","smallest","largest",,"close","as","great","wide","aware","forth",
+"important","main","whole","smallest","largest","close","as","great","wide","aware","forth",
 "water","air","fire","earth","tree","plant","leaf","grass","flower","animal","dog","cat","bird","fish",
 "house","home","room","door","window","table","chair","bed","floor","ceiling","wall","school","class",
 "teacher","student","book","page","paper","pen","pencil","bag","car","bus","train","bike","road",
@@ -64,18 +66,21 @@ def load_json(filepath):
     if os.path.exists(filepath):
         with open(filepath, "r", encoding="utf-8") as f:
             return json.load(f)
+    # files with "log" in them just keep the names of processed files, so they must be 
+    # stored as lists. otherwise, they contain lemma, count, ... and so they must be 
+    # a dictionary format:
     return {} if "log" not in filepath else []
 
-def save_json(filepath, data):
-    with open(filepath, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=4)
+def save_json(filepath,data):
+    with open(filepath,"w",encoding="utf-8") as f:
+        json.dump(data,f,indent=4)
 
 def process_text_frequencies(text, current_db):
     doc = nlp(text)
     for token in doc:
         lemma = token.lemma_.lower()
         pos = token.pos_
-        
+        # ignore the words in ignored_list
         if lemma in ignored_words: continue
         
         # Logic: Convert Adverbs to Adjectives. We don't need to list adverbs, we cound them as the adj version of them.
@@ -87,13 +92,15 @@ def process_text_frequencies(text, current_db):
         if pos not in {"NOUN", "VERB", "ADJ"}: continue
             
         unique_key = f"{lemma}_{pos}"
+        # Now check if the word already exists in our worlist "current_db"
         if unique_key in current_db:
             current_db[unique_key]["count"] += 1
+        # If it doesn't exist, we actually create a new entry in our "current_db" for that word
         else:
             current_db[unique_key] = {"lemma": lemma, "type": pos, "count": 1}
 
 def run_frequency_analysis():
-    print("\n--- PHASE 1: Word Frequency Analysis ---")
+    print("\n--- PHASE 1: Word frequency analysis ---")
     db = load_json(DB_FILE)
     processed_log = set(load_json(LOG_FILE))
     
